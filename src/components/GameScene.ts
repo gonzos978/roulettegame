@@ -5,6 +5,11 @@ import {BottomMenu} from "./BottomMenu";
 import {BetScreen} from "./BetScreen";
 import {ButtonsEnum} from "./data/ButtonsEnum";
 import {Background} from "./Background";
+import {NighbourMeni} from "./NighbourMeni";
+import {GameTimer} from "./GameTimer";
+import {GameGlobals} from "../GameGlobals";
+import {InfoScreen} from "./InfoScreen";
+import {WinPanel} from "./WinPanel";
 
 export class GameScene extends BaseGameScene {
 
@@ -14,6 +19,14 @@ export class GameScene extends BaseGameScene {
     private background: Background;
 
     private betScreen: BetScreen;
+
+    private nighbourMeni:NighbourMeni;
+
+    private gameTimer:GameTimer;
+
+    private infoScreen:InfoScreen;
+
+    private winPanel:WinPanel;
 
     constructor(sceneName: string, container: Container) {
         super(sceneName, container);
@@ -33,6 +46,24 @@ export class GameScene extends BaseGameScene {
 
         this.betScreen = new BetScreen();
         this.addChild(this.betScreen);
+
+        this.nighbourMeni = new NighbourMeni();
+        this.addChild(this.nighbourMeni);
+
+        this.gameTimer = new GameTimer("GameTimer", this.gameContainer);
+        GameGlobals.positionManager.setItemPositionAndScale(this.gameTimer,"timer__gameitem");
+        this.addChild(this.gameTimer);
+
+        this.infoScreen = new InfoScreen("InfoScreen", this.gameContainer);
+        this.addChild(this.infoScreen);
+
+        this.winPanel = new WinPanel("WinPanel", this.gameContainer);
+
+        this.addChild(this.winPanel);
+
+        /*setTimeout(()=>{
+            this.gameTimer.startTimer(35);
+        }, 3000);*/
 
 
         eventBus.on("BOTTOM_MENU_ACTION", this.handleBottomMenuActions.bind(this));

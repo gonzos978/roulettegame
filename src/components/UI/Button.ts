@@ -10,6 +10,8 @@ export class Button extends Container{
 
     public buttonName:string;
 
+    public buttonID:number;
+
     constructor(upSkin:Texture , downSkin:Texture) {
         super();
 
@@ -59,6 +61,12 @@ export class Button extends Container{
         this.skinsHolder[1].anchor.set(0.5);
     }
 
+    public setButtonID(id:number){
+        this.buttonID = id;
+    }
+    public getButtonID(){
+        return this.buttonID;
+    }
 
 
 

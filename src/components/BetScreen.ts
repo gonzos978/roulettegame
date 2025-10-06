@@ -9,7 +9,9 @@ export class BetScreen extends Container {
 
     private screenTwoHolder: Container;
 
-    private screenOneData: Array<Sprite>;
+    private screenOneData: Array<PotButton>;
+
+    private screenTwoData: Array<PotButton>;
 
     constructor() {
         super();
@@ -22,6 +24,9 @@ export class BetScreen extends Container {
 
 
         this.initScreenOne();
+        this.initScreenTwo();
+
+        this.switchScreen(1);
 
     }
 
@@ -59,11 +64,11 @@ export class BetScreen extends Container {
 
     }
 
-    public switchScreen(screenMode:number) {
-        if(screenMode === 1) {
+    public switchScreen(screenMode: number) {
+        if (screenMode === 1) {
             this.screenOneHolder.visible = true;
             this.screenTwoHolder.visible = false;
-        }else if(screenMode === 2) {
+        } else if (screenMode === 2) {
             this.screenOneHolder.visible = false;
             this.screenTwoHolder.visible = true;
         }
@@ -71,9 +76,32 @@ export class BetScreen extends Container {
 
     private initScreenTwo() {
 
+        this.screenTwoData = [];
+        const data: number[] = [0, 422, 610, 214, 204, 614, 402, 218, 412, 224, 604, 618, 210, 624, 408, 620, 406, 416, 208, 404, 616, 212, 622, 202, 414, 410, 222, 606, 216, 612,
+            420, 206, 220, 608, 424, 602, 418];
+
+        for (let i = 0; i < data.length; i++) {
+            const item = new PotButton(Globals.assetsLibrary["potBtt"], i);
+            GameGlobals.positionManager.setItemPositionAndScale(item, `betID${data[i]}_btn_t`)
+            item.alpha = 0.3;
+            this.screenTwoHolder.addChild(item);
+            item.on("click", this.handlePotButtons);
+            item.interactive = true;
+            this.screenTwoData.push(item);
+        }
+
+        const bigBtns = ["serie58_btn", "orphelins59_btn", "serie60_btn", "seriezero61_btn"];
+        for (let i = 0; i < bigBtns.length; i++) {
+            const item = new PotButton(Globals.assetsLibrary["historyBcgColors_003"], i);
+            GameGlobals.positionManager.setItemPositionAndScale(item, bigBtns[i]);
+            item.alpha = 0.3;
+            this.screenTwoHolder.addChild(item);
+            item.interactive = true;
+            item.on("click", this.handlePotButtons);
+            this.screenTwoData.push(item);
+        }
 
     }
-
 
 
     private handlePotButtons(e: any) {

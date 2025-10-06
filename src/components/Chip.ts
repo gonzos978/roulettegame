@@ -15,8 +15,17 @@ export class Chip extends Sprite {
 
     private chipPosition:{x: number, y: number} = {x: 0, y: 0};
 
+    private chipGlow:Sprite;
+
+    private isButtonActive:boolean = false;
+
     constructor(positionId: string) {
         super();
+
+        this.chipGlow = new Sprite(Globals.assetsLibrary["chipGlow"]);
+        this.chipGlow.anchor.set(0.5);
+        this.addChild(this.chipGlow);
+        this.chipGlow.visible = false;
 
         this.animSprite = Globals.spritesheetFactory.getSpriteSheetAnimation("jetons_json", "jeton")
         this.addChild(this.animSprite);
@@ -101,4 +110,17 @@ export class Chip extends Sprite {
         this.chipPosition.y = 0;
     }
 
+    public setButtonActive(active:boolean) {
+        this.isButtonActive = active;
+
+        if(active) {
+            this.chipGlow.visible = true;
+        } else {
+            this.chipGlow.visible = false;
+        }
+    }
+
+    public getButtonActive() {
+        return this.isButtonActive;
+    }
 }
